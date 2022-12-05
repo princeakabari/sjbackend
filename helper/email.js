@@ -3185,6 +3185,37 @@ xmlns:v="urn:schemas-microsoft-com:vml"
     Regards,
     ECOM
 `,
+      sendFor: async (body) => {
+        let mailOptions = {
+          from: CONFIG.email.SENDMAILFROM,
+          to: [`${body.email}` + "," + "prince.fontendarmy@gmail.com"],
+          subject: CONFIG.emailSubject.welcome,
+          text: `Hi ${body.firstName},
+    You have successfully registered as an ${body.firstName}.
+     Regards,
+     `,
+        };
+        try {
+          const sendedMail = await transporter.sendMail(mailOptions);
+          console.log(sendedMail);
+          if (sendedMail.response) {
+            return {
+              successMail: true,
+              messageMail: "Mail sended",
+            };
+          } else {
+            return {
+              successMail: false,
+              messageMail: "EMAIL NOT SENT",
+            };
+          }
+        } catch (error) {
+          return {
+            successMail: false,
+            messageMail: "ERROR HAPPEND IN SEND MAIl",
+          };
+        }
+      },
     };
     try {
       const sendedMail = await transporter.sendMail(mailOptions);
