@@ -1,0 +1,36 @@
+{
+  "policeGlance": {
+    "name": "Ankit",
+    "policyOwner": "Mr Ankit Gupta",
+    "lifeInsured": "Mr Ankit Gupta",
+    "nominee": "Ms Puja Gupta",
+    "policyNumber": "5555532",
+    "issuedOn": "31/03/2012",
+    "matureOn": "31/03/2027",
+    "policyTerm": "15 Years",
+    "premiumPayingTerm": "15 Years",
+    "sumAssured": 1000000,
+    "premiumFrequency": "Yearly",
+    "premiumAmount": 100000,
+    "premiumsPaidUpto": "31/03/2019"
+  },
+  "keyPolicyBenefits": {
+    "maturityBenefits": {
+      "cumulativePremium": 800000,
+      "amountInvested": 704231,
+      "fundValue": 1135554,
+      "grossIRR": 20.26,
+      "netIRR": 14.87
+    },
+    "maturityBenefitsTable": [{
+      "riskProfile": "Very high",
+      "fundName": "Opportunities fund",
+      "premiumAllocation": 100,
+      "availableUnits": 39124,
+      "NAV": 29.02,
+      "fundValue": 1135554,
+      "fundIRR": 14.87,
+      "benchmarkIRR": 12.32
+    }]
+  }
+}
