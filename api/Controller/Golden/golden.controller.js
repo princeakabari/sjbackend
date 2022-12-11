@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 
-const categoryService = require("../../Services/Category/category.service");
-const categoryValidator = require("../../Controller/Category/category.validator");
+const goldenService = require("../../Services/Golden/golden.service");
+const goldenValidator = require("../../Controller/Golden/golden.validator");
 
-router.post("/", categoryValidator.category, async (req, res) => {
+router.post("/", goldenValidator.golden, async (req, res) => {
   try {
-    let { success, message, data } = await categoryService.create(req.body);
+    let { success, message, data } = await goldenService.create(req.body);
 
     if (success) {
       return res.status(200).json({ success, message, data });
@@ -19,7 +19,7 @@ router.post("/", categoryValidator.category, async (req, res) => {
 });
 router.post("/list", async (req, res) => {
   try {
-    let { success, message, data } = await categoryService.list(
+    let { success, message, data } = await goldenService.list(
       req.body.where,
       req.body.pagination
     );
@@ -34,7 +34,7 @@ router.post("/list", async (req, res) => {
 });
 router.put("/:id", async (req, res) => {
   try {
-    let { success, message, data } = await categoryService.update(
+    let { success, message, data } = await goldenService.update(
       req.params.id,
       req.body
     );
@@ -51,7 +51,7 @@ router.put("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
-    let { success, message, data } = await categoryService.softDelete(
+    let { success, message, data } = await goldenService.softDelete(
       req.params.id
     );
     if (success) {
@@ -65,7 +65,7 @@ router.delete("/:id", async (req, res) => {
 });
 router.get("/:id", async (req, res) => {
   try {
-    let { success, message, data } = await categoryService.Exists({
+    let { success, message, data } = await goldenService.Exists({
       _id: req.params.id,
     });
     if (success) {

@@ -2,14 +2,14 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const CategorySchema = new Schema(
+const SliverSchema = new Schema(
   {
-    categoryName: {
+    sliverName: {
       type: String,
       required: true,
       trim: true,
     },
-    categoryImg: {
+    sliverImg: {
       type: String,
       trim: true,
     },
@@ -22,5 +22,5 @@ const CategorySchema = new Schema(
     timestamps: true,
   }
 );
-const Category = mongoose.model("category", CategorySchema);
-module.exports = Category;
+const Sliver = mongoose.model("sliver", SliverSchema);
+module.exports = Sliver;

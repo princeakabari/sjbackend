@@ -1,26 +1,26 @@
-const Category = require("../Category/category.modal");
+const Sliver = require("../Sliver/sliver.modal");
 const { responseMessages } = require("../../../helper/responseMessages");
 const pagination = require("../../../helper/pagination");
 
-exports.create = async (category) => {
+exports.create = async (sliver) => {
   try {
-    const info = new Category({
-      categoryName: category.categoryName,
-      categoryImg: category.categoryImg,
+    const info = new Sliver({
+      sliverName: sliver.sliverName,
+      sliverImg: sliver.sliverImg,
     });
    
-    const categoryData = await info.save();
+    const sliverData = await info.save();
 
-    if (categoryData) {
+    if (sliverData) {
       return {
         success: true,
-        message: "Category created!",
-        data: categoryData,
+        message: "Sliver created!",
+        data: sliverData,
       };
     } else {
       return {
         success: false,
-        message: "Category not created!",
+        message: "Sliver not created!",
         data: "",
       };
     }
@@ -35,7 +35,7 @@ exports.create = async (category) => {
 
 exports.list = async (where, datum) => {
   try {
-    const respose = await pagination.list(Category, where, datum);
+    const respose = await pagination.list(Sliver, where, datum);
     if (respose) {
       return {
         success: true,
@@ -57,25 +57,25 @@ exports.list = async (where, datum) => {
     };
   }
 };
-exports.update = async (params_id, category) => {
+exports.update = async (params_id, sliver) => {
   try {
     const options = { new: true };
-    const result = await Category.findByIdAndUpdate(
+    const result = await Sliver.findByIdAndUpdate(
       params_id,
-      category,
+      sliver,
       options
     );
 
     if (result) {
       return {
         success: true,
-        message: "Category updated!",
+        message: "Sliver updated!",
         data: result,
       };
     } else if (!result) {
       return {
         success: false,
-        message: "Category not updated!",
+        message: "Sliver not updated!",
         data: null,
       };
     }
@@ -89,19 +89,19 @@ exports.update = async (params_id, category) => {
 };
 exports.softDelete = async (params_id) => {
   try {
-    const result = await Category.findByIdAndUpdate(params_id, {
+    const result = await Sliver.findByIdAndUpdate(params_id, {
       isActive: false,
     });
     if (result) {
       return {
         success: true,
-        message: "Category status has been changed!",
+        message: "Sliver status has been changed!",
         data: result,
       };
     } else {
       return {
         success: false,
-        message: "Category status has been not changed!",
+        message: "Sliver status has been not changed!",
         data: null,
       };
     }
@@ -115,7 +115,7 @@ exports.softDelete = async (params_id) => {
 };
 exports.Exists = async (where) => {
   try {
-    const user = await Category.findOne(where);
+    const user = await Sliver.findOne(where);
 
     if (user) {
       return { success: true, message: responseMessages.userFound, data: user };

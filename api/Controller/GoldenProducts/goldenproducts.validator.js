@@ -1,12 +1,14 @@
 const Joi = require("joi");
 Joi.objectId = require("joi-objectid")(Joi);
 
-exports.category = (req, res, next) => {
+exports.goldenproducts = (req, res, next) => {
   try {
     if (req.body) {
       const schema = Joi.object({
-        categoryName: Joi.string().required(),
-        categoryImg: Joi.string(),
+        goldenproductName: Joi.string().required(),
+        goldenproductImg: Joi.string(),
+        goldenproductDescription: Joi.string(),
+        categoryId: Joi.objectId(),
       });
 
       let data = schema.validate(req.body);

@@ -2,18 +2,18 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const ProductSchema = new Schema(
+const GoldenproductSchema = new Schema(
   {
-    productName: {
+    goldenproductName: {
       type: String,
       required: true,
       trim: true,
     },
-    productImg: {
+    goldenproductImg: {
       type: String,
       trim: true,
     },
-    productDescription: {
+    goldenproductDescription: {
       type: String,
       trim: true,
     },
@@ -21,7 +21,7 @@ const ProductSchema = new Schema(
       {
         type: mongoose.Types.ObjectId,
         trim: true,
-        ref: "sliver",
+        ref: "golden",
       },
     ],
     isActive: {
@@ -33,5 +33,5 @@ const ProductSchema = new Schema(
     timestamps: true,
   }
 );
-const Products = mongoose.model("products", ProductSchema);
-module.exports = Products;
+const Goldenproducts = mongoose.model("goldenproducts", GoldenproductSchema);
+module.exports = Goldenproducts;
