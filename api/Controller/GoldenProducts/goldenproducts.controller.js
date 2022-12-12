@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const goldenproductService = require("../../Services/Goldenproducts/goldenproducts.service");
-const goldenproductValidator = require("../Goldenproducts/goldenproducts.validator");
+const goldenproductService = require("../../Services/GoldenProducts/goldenproducts.service");
+const goldenproductValidator = require("../GoldenProducts/goldenproducts.validator");
 
 router.post("/", goldenproductValidator.goldenproducts, async (req, res) => {
   try {
