@@ -3,7 +3,6 @@ const pagination = require("../../../helper/pagination");
 const Goldenproducts = require("./goldenproducts.modal");
 
 exports.create = async (goldenproducts) => {
- 
   try {
     const info = new Goldenproducts({
       goldenproductName: goldenproducts.goldenproductName,
@@ -37,7 +36,9 @@ exports.create = async (goldenproducts) => {
 
 exports.list = async (where, datum) => {
   try {
-    const respose = await pagination.list(Goldenproducts, where, datum, ["categoryId"]);
+    const respose = await pagination.list(Goldenproducts, where, datum, [
+      "categoryId",
+    ]);
     if (respose) {
       return {
         success: true,

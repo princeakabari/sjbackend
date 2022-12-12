@@ -6,6 +6,7 @@ const careerController = require("../api/Controller/Career/career.controller");
 const contactController = require("../api/Controller/Contact/contact.controller");
 const sliverController = require("../api/Controller/Sliver/sliver.controller");
 const goldenproductController = require("../api/Controller/GoldenProducts/goldenproducts.controller")
+
 const initialize = (app) => {
   app.use("/api/v1/user", userController);
   app.use("/api/v1/product", productController);
