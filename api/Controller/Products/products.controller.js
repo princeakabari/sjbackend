@@ -1,13 +1,27 @@
 const express = require("express");
 const router = express.Router();
+const multer = require("multer");
 
 const productService = require("../../Services/Products/products.service");
 const productValidator = require("../Products/products.validator");
 
-router.post("/", productValidator.products, async (req, res) => {
-  try {
-    let { success, message, data } = await productService.create(req.body);
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/img/sliverproducts");
+  },
+  filename: function (req, file, cb) {
+    cb(null, "sp-" + Date.now() + "." + file.originalname.split(".")[1]);
+  },
+});
 
+const uploadImg = multer({ storage: storage }).single("productImg");
+
+router.post("/", uploadImg, productValidator.products, async (req, res) => {
+  try {
+    let { success, message, data } = await productService.create(
+      req.body,
+      req.file
+    );
     if (success) {
       return res.status(200).json({ success, message, data });
     } else {
@@ -17,6 +31,7 @@ router.post("/", productValidator.products, async (req, res) => {
     res.status(400).json({ message: error });
   }
 });
+
 router.post("/list", async (req, res) => {
   try {
     let { success, message, data } = await productService.list(
@@ -32,14 +47,13 @@ router.post("/list", async (req, res) => {
     res.status(400).json({ message: error });
   }
 });
-router.put("/:id", async (req, res) => {
- 
+router.put("/:id", uploadImg, async (req, res) => {
   try {
     let { success, message, data } = await productService.update(
       req.params.id,
-      req.body
+      req.body,
+      req.file
     );
-
     if (success) {
       return res.status(200).json({ success, message, data });
     } else {
@@ -65,7 +79,6 @@ router.delete("/:id", async (req, res) => {
   }
 });
 router.get("/:id", async (req, res) => {
- 
   try {
     let { success, message, data } = await productService.Exists({
       _id: req.params.id,

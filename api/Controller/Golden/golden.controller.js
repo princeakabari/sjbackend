@@ -1,12 +1,26 @@
 const express = require("express");
 const router = express.Router();
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/img/golden");
+  },
+  filename: function (req, file, cb) {
+    cb(null, "spc-" + Date.now() + "." + file.originalname.split(".")[1]);
+  },
+});
+const uploadImg = multer({ storage: storage }).single("goldenImg");
 
 const goldenService = require("../../Services/Golden/golden.service");
 const goldenValidator = require("../../Controller/Golden/golden.validator");
 
-router.post("/", goldenValidator.golden, async (req, res) => {
+router.post("/", uploadImg, goldenValidator.golden, async (req, res) => {
   try {
-    let { success, message, data } = await goldenService.create(req.body);
+    let { success, message, data } = await goldenService.create(
+      req.body,
+      req.file
+    );
 
     if (success) {
       return res.status(200).json({ success, message, data });
@@ -32,11 +46,12 @@ router.post("/list", async (req, res) => {
     res.status(400).json({ message: error });
   }
 });
-router.put("/:id", async (req, res) => {
+router.put("/:id", uploadImg, async (req, res) => {
   try {
     let { success, message, data } = await goldenService.update(
       req.params.id,
-      req.body
+      req.body,
+      req.file   
     );
 
     if (success) {

@@ -2,11 +2,11 @@ const { responseMessages } = require("../../../helper/responseMessages");
 const pagination = require("../../../helper/pagination");
 const Goldenproducts = require("./goldenproducts.modal");
 
-exports.create = async (goldenproducts) => {
+exports.create = async (goldenproducts, file) => {
   try {
     const info = new Goldenproducts({
       goldenproductName: goldenproducts.goldenproductName,
-      goldenproductImg: goldenproducts.goldenproductImg,
+      goldenproductImg: file.path,
       goldenproductDescription: goldenproducts.goldenproductDescription,
       categoryId: goldenproducts.categoryId,
     });
@@ -60,12 +60,16 @@ exports.list = async (where, datum) => {
     };
   }
 };
-exports.update = async (params_id, category) => {
+exports.update = async (params_id, category, file) => {
   try {
     const options = { new: true };
+    let reqBody = {
+      ...category,
+      goldenproductImg: file.path,
+    };
     const result = await Goldenproducts.findByIdAndUpdate(
       params_id,
-      category,
+      reqBody,
       options
     );
 

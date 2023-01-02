@@ -2,13 +2,13 @@ const Golden = require("./golden.modal");
 const { responseMessages } = require("../../../helper/responseMessages");
 const pagination = require("../../../helper/pagination");
 
-exports.create = async (golden) => {
+exports.create = async (golden, file) => {
   try {
     const info = new Golden({
       goldenName: golden.goldenName,
-      goldenImg: golden.goldenImg,
+      goldenImg: file.path,
     });
-   
+
     const goldenData = await info.save();
 
     if (goldenData) {
@@ -57,15 +57,14 @@ exports.list = async (where, datum) => {
     };
   }
 };
-exports.update = async (params_id, golden) => {
+exports.update = async (params_id, golden, file) => {
   try {
     const options = { new: true };
-    const result = await Golden.findByIdAndUpdate(
-      params_id,
-      golden,
-      options
-    );
-
+    let reqBody = {
+      ...golden,
+      goldenImg: file.path,
+    };
+    const result = await Golden.findByIdAndUpdate(params_id, reqBody, options);
     if (result) {
       return {
         success: true,

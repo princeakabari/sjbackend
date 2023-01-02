@@ -2,13 +2,13 @@ const Sliver = require("../Sliver/sliver.modal");
 const { responseMessages } = require("../../../helper/responseMessages");
 const pagination = require("../../../helper/pagination");
 
-exports.create = async (sliver) => {
+exports.create = async (sliver, file) => {
   try {
     const info = new Sliver({
       sliverName: sliver.sliverName,
-      sliverImg: sliver.sliverImg,
+      sliverImg: file.path,
     });
-   
+
     const sliverData = await info.save();
 
     if (sliverData) {
@@ -57,15 +57,14 @@ exports.list = async (where, datum) => {
     };
   }
 };
-exports.update = async (params_id, sliver) => {
+exports.update = async (params_id, sliver, file) => {
   try {
     const options = { new: true };
-    const result = await Sliver.findByIdAndUpdate(
-      params_id,
-      sliver,
-      options
-    );
-
+    let reqBody = {
+      ...sliver,
+      sliverImg: file.path,
+    };
+    const result = await Sliver.findByIdAndUpdate(params_id, reqBody, options);
     if (result) {
       return {
         success: true,
@@ -127,6 +126,40 @@ exports.Exists = async (where) => {
       };
     }
   } catch (error) {
+    return {
+      success: false,
+      message: error,
+      data: null,
+    };
+  }
+};
+exports.Img_update = async (params_id, file, body) => {
+  try {
+    let productInfo = { ...body };
+    console.log("1", body);
+    if (typeof body.sliverImg === "string") {
+      productInfo["sliverImg"] = body.sliverImg;
+    } else {
+      productInfo["sliverImg"] = file.path;
+    }
+
+    const result = await Product.findByIdAndUpdate(params_id, productInfo);
+
+    if (result) {
+      return {
+        success: true,
+        message: "Product updated successfully",
+        data: result,
+      };
+    } else {
+      return {
+        success: false,
+        message: "Product not updated ",
+        data: null,
+      };
+    }
+  } catch (error) {
+    console.error(error);
     return {
       success: false,
       message: error,

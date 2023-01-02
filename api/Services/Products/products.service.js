@@ -2,11 +2,11 @@ const { responseMessages } = require("../../../helper/responseMessages");
 const pagination = require("../../../helper/pagination");
 const Products = require("./products.modal");
 
-exports.create = async (products) => {
+exports.create = async (products, file) => {
   try {
     const info = new Products({
       productName: products.productName,
-      productImg: products.productImg,
+      productImg: file.path,
       productDescription: products.productDescription,
       categoryId: products.categoryId,
     });
@@ -36,7 +36,9 @@ exports.create = async (products) => {
 
 exports.list = async (where, datum) => {
   try {
-    const respose = await pagination.list(Products, where, datum, ["categoryId"]);
+    const respose = await pagination.list(Products, where, datum, [
+      "categoryId",
+    ]);
     if (respose) {
       return {
         success: true,
@@ -58,15 +60,18 @@ exports.list = async (where, datum) => {
     };
   }
 };
-exports.update = async (params_id, category) => {
+exports.update = async (params_id, category, file) => {
   try {
     const options = { new: true };
+    let reqBody = {
+      ...category,
+      productImg: file.path,
+    };
     const result = await Products.findByIdAndUpdate(
       params_id,
-      category,
+      reqBody,
       options
     );
-
     if (result) {
       return {
         success: true,
