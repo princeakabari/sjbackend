@@ -93,6 +93,32 @@ exports.update = async (params_id, category, file) => {
     };
   }
 };
+exports.wIupdate = async (params_id, golden) => {
+  try {
+    console.log(golden)
+    const result = await Products.findByIdAndUpdate(params_id, golden);
+    if (result) {
+      return {
+        success: true,
+        message: "Product updated!",
+        data: result,
+      };
+    } else if (!result) {
+      return {
+        success: false,
+        message: "Product not updated!",
+        data: null,
+      };
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: error,
+      data: null,
+    };
+  }
+};
+
 exports.softDelete = async (params_id) => {
   try {
     const result = await Products.findByIdAndUpdate(params_id, {

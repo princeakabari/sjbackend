@@ -51,7 +51,24 @@ router.put("/:id", uploadImg, async (req, res) => {
     let { success, message, data } = await goldenService.update(
       req.params.id,
       req.body,
-      req.file   
+      req.file
+    );
+
+    if (success) {
+      return res.status(200).json({ success, message, data });
+    } else {
+      return res.status(400).json({ success, message, data });
+    }
+  } catch (error) {
+    res.status(400).json({ message: error });
+  }
+});
+
+router.patch("/:id", async (req, res) => {
+  try {
+    let { success, message, data } = await goldenService.withoutImgupdate(
+      req.params.id,
+      req.body
     );
 
     if (success) {

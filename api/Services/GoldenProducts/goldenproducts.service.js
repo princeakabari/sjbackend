@@ -1,6 +1,7 @@
 const { responseMessages } = require("../../../helper/responseMessages");
 const pagination = require("../../../helper/pagination");
 const Goldenproducts = require("./goldenproducts.modal");
+const Golden = require("../Golden/golden.modal");
 
 exports.create = async (goldenproducts, file) => {
   try {
@@ -61,17 +62,14 @@ exports.list = async (where, datum) => {
   }
 };
 exports.update = async (params_id, category, file) => {
+  console.log(":", category);
   try {
-    const options = { new: true };
+    // const options = { new: true };
     let reqBody = {
       ...category,
       goldenproductImg: file.path,
     };
-    const result = await Goldenproducts.findByIdAndUpdate(
-      params_id,
-      reqBody,
-      options
-    );
+    const result = await Goldenproducts.findByIdAndUpdate(params_id, reqBody);
 
     if (result) {
       return {
@@ -83,6 +81,32 @@ exports.update = async (params_id, category, file) => {
       return {
         success: false,
         message: "Goldenproduct not updated!",
+        data: null,
+      };
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: error,
+      data: null,
+    };
+  }
+};
+
+exports.wIupdate = async (params_id, golden) => {
+  try {
+    console.log(golden);
+    const result = await Goldenproducts.findByIdAndUpdate(params_id, golden);
+    if (result) {
+      return {
+        success: true,
+        message: "Gold Product updated!",
+        data: result,
+      };
+    } else if (!result) {
+      return {
+        success: false,
+        message: "Gold Products not updated!",
         data: null,
       };
     }
@@ -123,7 +147,6 @@ exports.softDelete = async (params_id) => {
 exports.Exists = async (where) => {
   try {
     const user = await Goldenproducts.findOne(where);
-
     if (user) {
       return { success: true, message: responseMessages.userFound, data: user };
     } else {

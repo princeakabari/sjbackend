@@ -68,6 +68,24 @@ router.put("/:id", uploadImg, async (req, res) => {
   }
 });
 
+router.patch("/:id", async (req, res) => {
+  console.log("1")
+  try {
+    let { success, message, data } = await goldenproductService.wIupdate(
+      req.params.id,
+      req.body
+    );
+
+    if (success) {
+      return res.status(200).json({ success, message, data });
+    } else {
+      return res.status(400).json({ success, message, data });
+    }
+  } catch (error) {
+    res.status(400).json({ message: error });
+  }
+});
+
 router.delete("/:id", async (req, res) => {
   try {
     let { success, message, data } = await goldenproductService.softDelete(

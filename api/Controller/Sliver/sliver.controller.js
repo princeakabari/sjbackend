@@ -63,6 +63,22 @@ router.put("/:id", uploadImg, async (req, res) => {
     res.status(400).json({ message: error });
   }
 });
+router.patch("/:id", async (req, res) => {
+  try {
+    let { success, message, data } = await sliverService.wIupdate(
+      req.params.id,
+      req.body
+    );
+
+    if (success) {
+      return res.status(200).json({ success, message, data });
+    } else {
+      return res.status(400).json({ success, message, data });
+    }
+  } catch (error) {
+    res.status(400).json({ message: error });
+  }
+});
 
 router.delete("/:id", async (req, res) => {
   try {

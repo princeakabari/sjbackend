@@ -60,11 +60,39 @@ exports.list = async (where, datum) => {
 exports.update = async (params_id, golden, file) => {
   try {
     const options = { new: true };
+
     let reqBody = {
       ...golden,
       goldenImg: file.path,
     };
     const result = await Golden.findByIdAndUpdate(params_id, reqBody, options);
+    if (result) {
+      return {
+        success: true,
+        message: "Golden updated!",
+        data: result,
+      };
+    } else if (!result) {
+      return {
+        success: false,
+        message: "Golden not updated!",
+        data: null,
+      };
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: error,
+      data: null,
+    };
+  }
+};
+
+exports.withoutImgupdate = async (params_id, golden) => {
+  try {
+    // console.log("GOLDEN",golden)
+    const options = { new: true };
+    const result = await Golden.findByIdAndUpdate(params_id, golden, options);
     if (result) {
       return {
         success: true,

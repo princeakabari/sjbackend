@@ -86,6 +86,31 @@ exports.update = async (params_id, sliver, file) => {
     };
   }
 };
+exports.wIupdate = async (params_id, sliver) => {
+  try {
+    const options = { new: true };
+    const result = await Sliver.findByIdAndUpdate(params_id, sliver, options);
+    if (result) {
+      return {
+        success: true,
+        message: "Sliver updated!",
+        data: result,
+      };
+    } else if (!result) {
+      return {
+        success: false,
+        message: "Sliver not updated!",
+        data: null,
+      };
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: error,
+      data: null,
+    };
+  }
+};
 exports.softDelete = async (params_id) => {
   try {
     const result = await Sliver.findByIdAndUpdate(params_id, {
